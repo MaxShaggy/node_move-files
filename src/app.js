@@ -7,8 +7,18 @@ const path = require('path');
 function moveFiles() {
   try {
     const data = process.argv.slice(2);
+
+    if (data.length < 2) {
+      throw new Error('Script accepts 2 arguments: source and destination');
+    }
+
     const source = data[0];
     const destination = data[1];
+
+    if (!fs.statSync(source).isFile()) {
+      throw new Error('Source should be a file');
+    }
+
     const isEndsWith = destination.endsWith('/');
     const isExistsPath = fs.existsSync(destination);
 
